@@ -2,6 +2,7 @@ import { AiOutlineDashboard } from "react-icons/ai";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
+import { IoChevronBackCircle } from "react-icons/io5";
 export default function KanbasNavigation() {
     return (
       <div id="wd-kanbas-navigation" className="list-group rounded-0 d-flex flex-column justify-content-center align-items-center">
@@ -12,7 +13,7 @@ export default function KanbasNavigation() {
       <a id="wd-calendar-link" href="#/Kanbas/Calendar" className="list-group-item text-white bg-black text-center border-0"><IoCalendarOutline className="fs-1 text-danger" /><br />Calendar</a>
       <a id="wd-inbox-link" href="#/Kanbas/Inbox" className="list-group-item text-white bg-black text-center border-0"><FaInbox className="fs-1 text-danger" /><br />Inbox</a>
       <a id="wd-labs-link" href="#/Labs" className="list-group-item text-white bg-black text-center border-0"><LiaCogSolid className="fs-1 text-danger" /><br />Labs</a>
-      <a id="wd-landing-page" className="list-group-item text-white bg-black text-center border-0" href="/">Back to landing page</a>
+      <a id="wd-landing-page" className="list-group-item text-white bg-black text-center border-0" href="/"><IoChevronBackCircle  className="fs-1 text-danger"/><br />Back to landing page</a>
     </div>
   );}
   
