@@ -5,7 +5,7 @@ export default function LandingPage() {
         <h3>Karan Goyal</h3>
       <ul id="wd-landing-page">
         <li>
-          <a id="wd-lab-link" href="#/Lab1">
+          <a id="wd-lab-link" href="#/Labs">
             Labs
           </a>
         </li>

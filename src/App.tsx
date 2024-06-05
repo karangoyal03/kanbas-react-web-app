@@ -15,9 +15,10 @@ function App() {
         {/* <TOC /> */}
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="Lab1" element={<Lab1 />} />
-          <Route path="Lab2" element={<Lab2 />} />
-          <Route path="Lab3" element={<Lab3 />} /> 
+          <Route path ="/Labs" element ={<Labs/>} />
+          <Route path="/Labs/Lab1" element={<Lab1 />} />
+          <Route path="/Labs/Lab2" element={<Lab2 />} />
+          <Route path="/Labs/Lab3" element={<Lab3 />} /> 
           <Route path="/Kanbas/*" element={<Kanbas />} />
         </Routes>
       </div>
