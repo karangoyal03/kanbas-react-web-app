@@ -11,7 +11,7 @@ import LandingPage from "./LandingPage";
 function App() {
   return (
     <HashRouter>
-      <div className="App">
+      <div className="App h-100">
         {/* <TOC /> */}
         <Routes>
           <Route path="/" element={<LandingPage />} />
