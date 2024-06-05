@@ -2,6 +2,7 @@ import "./index.css";
 export default function Lab2() {
   return (
     <div className="container">
+      <a id="wd-landing-page" className="list-group-item text-white bg-black text-center border-0" href="/">Back to landing page</a>
       <h2>Lab 2 - Cascading Style Sheets</h2>
       <h3>Styling with the STYLE attribute</h3>
       <p>
