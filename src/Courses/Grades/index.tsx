@@ -1,35 +1,48 @@
 import { IoSettingsSharp } from "react-icons/io5";
-import { FaFileExport } from "react-icons/fa6";
+import { FaFileExport } from "react-icons/fa";
 import { TbFileArrowLeft } from "react-icons/tb";
 import { BsSearch } from 'react-icons/bs';
-import { RiArrowDropDownLine } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
 import { useParams } from "react-router-dom";
 import * as db from "../../Kanbas/Database";
 
 export default function Grades() {
-  const { cid } = useParams<{ cid: string }>();
+  const { cid } = useParams();
 
   // Function to get enrollments for the specified course
-  function getAssignmentsForCourse(cid: string) {
-    return db.enrollments.filter(enrollment => enrollment.course === cid);
+  function getEnrollmentsForCourse(courseId:any) {
+    return db.enrollments.filter(enrollment => enrollment.course === courseId);
   }
 
-  // Retrieve enrollments for the current course
-  const results = getAssignmentsForCourse(cid + "");
+  // Function to get the course details by course ID
+  function getCourseDetails(courseId:any) {
+    return db.courses.find(course => course._id === courseId);
+  }
 
+  // Retrieve enrollments and course details for the current course
+  const enrollments = getEnrollmentsForCourse(cid);
+  const courseDetails = getCourseDetails(cid);
+  
   // Retrieve assignments list for the current course
   const assignmentsList = db.assignments.filter(assignment => assignment.course === cid);
 
   // Function to get the full name of a user based on user ID
-  function getNameForUserId(uid: string) {
+  function getNameForUserId(uid:any) {
     const user = db.users.find(user => user._id === uid);
     return user ? `${user.firstName} ${user.lastName}` : "Unknown";
   }
 
+  function getGradeForAssignment(assignmentId:any, studentId:any) {
+    console.log("Looking for grade - Assignment ID:", assignmentId, "Student ID:", studentId);
+    const grade = db.grades.find(grade => grade.assignment === assignmentId && grade.student === studentId);
+    console.log("Found Grade:", grade);
+    return grade ? `${grade.grade}%` : "Not Graded";
+  }
+
   return (
     <div>
-      <h2>Grades</h2>
+      <h2>Grades for {courseDetails ? courseDetails.name : 'Course'}</h2>
+      <p>{courseDetails ? courseDetails.description : 'Course description not available.'}</p>
       <div className="d-flex justify-content-end p-3">
         <button className="btn btn-light me-2 px-3 py-2 text-dark">
           <FaFileExport /> Import
@@ -50,7 +63,7 @@ export default function Grades() {
             </span>
             <input type="text" className="form-control" placeholder="Search for Students" id="wd-search-students" />
           </div>
-          <br/>
+          <br />
           <button className="btn btn-light me-2 px-3 py-2 text-dark">
             <CiFilter /> Apply Filters
           </button>
@@ -65,29 +78,26 @@ export default function Grades() {
           </div>
         </div>
       </div>
-      <br/>
+      <br />
       <div className="table-responsive">
         <table className="table table-striped">
           <thead>
             <tr>
               <th>Student Name</th>
-              {assignmentsList.map((assignment, index) => (
-                <th key={index}>{assignment.title}</th>
+              {assignmentsList.map((assignment) => (
+                <th key={assignment._id}>{assignment.title}</th>
               ))}
             </tr>
           </thead>
           <tbody>
-            {results.map((enrollment, enrollmentIndex) => (
+            {enrollments.map((enrollment, enrollmentIndex) => (
               <tr key={enrollmentIndex}>
-                <td style={{ color: 'red' }}>{getNameForUserId(enrollment._id)}</td>
-                {assignmentsList.map((assignment, assignmentIndex) => {
-                  const grade = db.grades.find(grade => grade.assignment === assignment._id && grade.student === enrollment.user);
-                  return (
-                    <td key={assignmentIndex}>
-                      {grade ? `${grade.grade}%` : "Not Graded"}
-                    </td>
-                  );
-                })}
+                <td style={{ color: 'red' }}>{getNameForUserId(enrollment.user)}</td>
+                {assignmentsList.map((assignment) => (
+                  <td key={assignment._id}>
+                    {getGradeForAssignment(assignment._id, enrollment.user)}
+                  </td>
+                ))}
               </tr>
             ))}
           </tbody>
