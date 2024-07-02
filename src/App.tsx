@@ -6,6 +6,7 @@ import Lab2 from ".//Labs/Lab2";
 import Lab3 from ".//Labs/Lab3";
 import Kanbas from ".//Kanbas";
 import Labs from "./Labs";
+import Lab4 from "./Labs/Lab4";
 import LandingPage from "./LandingPage";
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
           <Route path ="/Labs" element ={<Labs/>} />
           <Route path="/Labs/Lab1" element={<Lab1 />} />
           <Route path="/Labs/Lab2" element={<Lab2 />} />
-          <Route path="/Labs/Lab3" element={<Lab3 />} /> 
+          <Route path="/Labs/Lab3" element={<Lab3 />} />
+          <Route path="/Labs/Lab4" element={<Lab4 />} /> 
           <Route path="/Kanbas/*" element={<Kanbas />} />
         </Routes>
       </div>
