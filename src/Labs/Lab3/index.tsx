@@ -27,11 +27,22 @@ import Classes from "./Classes";
 import Styles from "./Styles";
 import Square from "./Square";
 import Highlight from "./Highlight";
+import PathParameters from "./PathParameters";
+import { useSelector } from "react-redux";
 export default function Lab3() {
+  const { todos } = useSelector((state: any) => state.todosReducer);
   return (
     <div id="wd-lab3" className="container-fluid">
       <h3>Lab 3</h3>
       <a id="wd-landing-page" className="list-group-item text-white bg-black text-center border-0" href="/">Back to landing page</a>
+      <ul className="list-group">
+        {todos.map((todo: any) => (
+          <li className="list-group-item" key={todo.id}>
+            {todo.title}
+          </li>
+        ))}
+      </ul>
+      <hr />
       <VariablesAndConstants/>
       <VariableTypes/>
       <BooleanVariables/>
@@ -66,7 +77,7 @@ export default function Lab3() {
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipitratione eaque illo minus cum, saepe totam
         vel nihil repellat nemo explicabo excepturi consectetur. Modi omnis minus sequi maiores, provident voluptates.
      </Highlight>
-
+      <PathParameters/>
     </div>
   );
 }

@@ -17,7 +17,8 @@ export default function Lab4(){
       }
     
     return (
-        <div>
+        <div className='container'>
+            <a id="wd-landing-page" className="list-group-item text-white bg-black text-center border-0" href="/">Back to landing page</a>
            <ClickEvent/>
            <PassingDataOnEvent/>
            <PassingFunctions theFunction={sayHello}/>

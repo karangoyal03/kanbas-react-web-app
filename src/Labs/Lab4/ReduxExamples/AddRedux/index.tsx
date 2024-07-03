@@ -15,8 +15,8 @@ export default function AddRedux() {
         className="form-control" />
       <input type="number" value={b}
         onChange={(e) => setB(parseInt(e.target.value))}
-        className="form-control" />
-      <button className="btn btn-primary" id="wd-add-redux-click"
+        className="form-control my-2" />
+      <button className="btn btn-primary my-2" id="wd-add-redux-click"
         onClick={() => dispatch(add({ a, b }))}>
         Add Redux </button>
       <hr/>

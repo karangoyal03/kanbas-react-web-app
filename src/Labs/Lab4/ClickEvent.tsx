@@ -8,13 +8,14 @@ export default function ClickEvent() {
   return (
     <div id="wd-click-event">
       <h2>Click Event</h2>
-      <button onClick={hello} id="wd-hello-world-click">
+      <button className="btn btn-primary mx-2" onClick={hello} id="wd-hello-world-click">
         Hello World!
       </button>
-      <button onClick={() => lifeIs("Good!")} id="wd-life-is-good-click">
+      <button className="btn btn-primary mx-2" onClick={() => lifeIs("Good!")} id="wd-life-is-good-click">
         Life is Good!
       </button>
       <button
+      className="btn btn-primary mx-2" 
         onClick={() => {
           hello();
           lifeIs("Great!");
