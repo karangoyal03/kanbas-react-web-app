@@ -96,7 +96,7 @@ export default function Assignments() {
               <b>Due</b> May 13 at 11:59pm | 100 pts
             </div>
             <ModuleControlChecks
-              assignmentId={results[0]._id}
+              assignmentId={assignment._id}
               deleteAssignment={(assignmentId) => {
                 dispatch(deleteAssignment(assignmentId));
               }}

@@ -6,13 +6,9 @@ import { FaTrash } from "react-icons/fa";
 import DeleteModal from "./DeleteModal"
 
 export default function ModuleControlChecks({ assignmentId, deleteAssignment}: { assignmentId: string; deleteAssignment: (assignmentId: string) => void }) {
-  
-  const handleTrashClick = () => {
-    console.log("Trash clicked");
-  };
   return (
     <div className="float-end">
-<FaTrash className="text-danger me-2 mb-1" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal" />
+<FaTrash className="text-danger me-2 mb-1" data-bs-toggle="modal" data-bs-target={`#deleteConfirmationModal-${assignmentId}`} />
       <GreenCheckmark />
       <IoEllipsisVertical className="fs-4" />
       {
