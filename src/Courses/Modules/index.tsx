@@ -10,6 +10,13 @@ export default function Modules() {
   const { cid } = useParams();
   // const modules = db.modules;
   const [modules, setModules] = useState<any[]>(db.modules);
+  const [moduleName, setModuleName] = useState("");
+  const addModule = () => {
+    setModules([ ...modules, { _id: new Date().getTime().toString(),
+                                     name: moduleName, course: cid, lessons: [] } ]);
+    setModuleName("");
+  };
+
   return (
     <div>
       <div className="d-flex justify-content-center mb-3">
@@ -21,7 +28,7 @@ export default function Modules() {
         <button className="btn btn-danger">+ Module</button>
       </div>
       <div id="wd-modules">
-        <ModulesControls /><br /><br /><br /><br />
+        <ModulesControls setModuleName={setModuleName} moduleName={moduleName} addModule={addModule} /><br /><br /><br /><br />
         <ul className="list-group rounded-0">
           {modules
            .filter((module) => module.course === cid)
