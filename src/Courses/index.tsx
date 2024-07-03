@@ -6,8 +6,8 @@ import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import { FaAlignJustify } from "react-icons/fa";
 import Grades from "./Grades"
-import { courses } from "../../src/Kanbas/Database";
-export default function Courses() {
+// import { courses } from "../../src/Kanbas/Database";
+export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   console.log("inside course page"+cid);
   const course = courses.find((course) => course._id === cid);
