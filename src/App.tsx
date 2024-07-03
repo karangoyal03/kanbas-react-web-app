@@ -8,10 +8,12 @@ import Kanbas from ".//Kanbas";
 import Labs from "./Labs";
 import Lab4 from "./Labs/Lab4";
 import LandingPage from "./LandingPage";
-
+import store from "./../src/Labs/store";
+import { Provider } from "react-redux";
 function App() {
   return (
     <HashRouter>
+       <Provider store={store}>
       <div className="App h-100">
         {/* <TOC /> */}
         <Routes>
@@ -24,6 +26,7 @@ function App() {
           <Route path="/Kanbas/*" element={<Kanbas />} />
         </Routes>
       </div>
+      </Provider>
     </HashRouter>
   );
 }
