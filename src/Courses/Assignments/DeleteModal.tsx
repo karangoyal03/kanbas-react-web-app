@@ -1,4 +1,3 @@
-import React from 'react';
 
 export default function DeleteModal({assignmentId,deleteAssignment } : { assignmentId: string; deleteAssignment:(assignmentId: string) => void}) {
 

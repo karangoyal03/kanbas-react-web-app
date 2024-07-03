@@ -27,10 +27,11 @@ const assignmentSlice = createSlice({
         (a: any) => a._id !== assignmentId
       );
     },
-    updateAssignment: (state, { payload: assignment }) => {
-      state.assignments = state.assignments.map((a: any) =>
-        a._id === assignment._id ? assignment : a
-      ) as any;
+    updateAssignment: (state, action) => {
+      const updatedAssignment = action.payload;
+      state.assignments = state.assignments.map((assignment) =>
+        assignment._id === updatedAssignment._id ? updatedAssignment : assignment
+      );
     },
     editAssignment: (state, { payload: assignmentId }) => {
         state.assignments = state.assignments.map((a: any) =>

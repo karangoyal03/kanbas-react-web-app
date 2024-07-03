@@ -1,14 +1,13 @@
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
-import * as db from "../../Kanbas/Database";
 import { useSelector, useDispatch } from "react-redux";
 import React, { useState ,useEffect } from "react";
-import { addAssignment,deleteAssignment,updateAssignment,editAssignment } from "./reducer";
+import { addAssignment,updateAssignment,editAssignment } from "./reducer";
 export default function AssignmentEditor() {
   const { cid } = useParams<{ cid: string }>();
   const { aid } = useParams<{ aid: string }>();
   const navigate  = useNavigate();
-  const { assignments } = useSelector((state: any) => state.assignmentReducer);
+  const { assignments} = useSelector((state: any) => state.assignmentReducer);
   const dispatch = useDispatch();
   const handleCancelClick = () => {
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
@@ -36,25 +35,28 @@ export default function AssignmentEditor() {
       setDueDate(results[0].dueDate || "2023-12-15");
       setAvailableFrom(results[0].availableFrom || "2023-09-10");
     }
-  }, [results]);
+  }, [aid]);
+
 
   const handleSaveAssignment = () => {
-        const addAssignmentHandler = () => {
-      dispatch(
-        addAssignment({
-          title: title,
-          course: course,
-          description: description,
-          points: points,
-          dueDate: dueDate,
-          availableFrom: availableFrom,
-        })
-      );
+    const assignmentData = {
+      _id: aid, // Ensure you pass the correct assignment _id
+      title,
+      course: cid,
+      description,
+      points,
+      dueDate,
+      availableFrom,
     };
-
-    addAssignmentHandler();
+  
+    if (results[0] && results[0]._id === aid) {
+      dispatch(updateAssignment(assignmentData));
+    } else {
+      dispatch(addAssignment(assignmentData));
+    }
+  
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
-  }
+  };
 
   return (
     <div id="wd-assignments-editor">
