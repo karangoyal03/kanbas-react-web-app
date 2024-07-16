@@ -7,7 +7,8 @@ import { BsSearch } from "react-icons/bs";
 import { useParams } from "react-router";
 import * as db from "../../Kanbas/Database";
 import { useSelector, useDispatch } from "react-redux";
-import React, { useState } from "react";
+import * as client from "./client";
+import React, { useState, useEffect } from "react";
 import {
   addAssignment,
   deleteAssignment,
@@ -17,10 +18,14 @@ import {
 import { useNavigate } from "react-router-dom";
 export default function Assignments() {
   const { cid } = useParams();
-  const { assignments } = useSelector((state: any) => state.assignmentReducer);
+  // const { assignments } = useSelector((state: any) => state.assignmentReducer);
   const dispatch = useDispatch();
-  function getAssignmentsForCourse(cid: String) {
-    return assignments.filter((assignment: any) => assignment.course === cid);
+  const [results, setResults] = useState<any[]>([]);
+  async function getAssignmentsForCourse(cid: String) {
+    const assignments = await client.findAssignmentsForCourse(cid as string);
+    setResults(
+      assignments.filter((assignment: any) => assignment.course === cid)
+    );
   }
 
   const navigate = useNavigate();
@@ -30,7 +35,9 @@ export default function Assignments() {
     navigate(`${id}`);
   };
 
-  const results = getAssignmentsForCourse(cid + "");
+  useEffect(() => {
+    getAssignmentsForCourse(cid as string);
+  }, []);
 
   return (
     <div id="wd-assignments" className="container mt-4">
