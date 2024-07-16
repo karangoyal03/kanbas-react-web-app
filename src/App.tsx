@@ -10,12 +10,12 @@ import Lab4 from "./Labs/Lab4";
 import LandingPage from "./LandingPage";
 import store from "./../src/Labs/store";
 import { Provider } from "react-redux";
+import Lab5 from "./Labs/Lab5";
 function App() {
   return (
     <HashRouter>
        <Provider store={store}>
       <div className="App h-100">
-        {/* <TOC /> */}
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path ="/Labs" element ={<Labs/>} />
@@ -23,6 +23,7 @@ function App() {
           <Route path="/Labs/Lab2" element={<Lab2 />} />
           <Route path="/Labs/Lab3" element={<Lab3 />} />
           <Route path="/Labs/Lab4" element={<Lab4 />} /> 
+          <Route path="/Labs/Lab5" element={<Lab5 />} /> 
           <Route path="/Kanbas/*" element={<Kanbas />} />
         </Routes>
       </div>

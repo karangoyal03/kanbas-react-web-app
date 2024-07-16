@@ -5,12 +5,20 @@ import Courses from "../Courses";
 import Account from "../Account";
 import Calender from "../Calender";
 import Inbox from "../Inbox";
-import * as db from "./Database";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import store from "./store";
 import { Provider } from "react-redux";
+import * as client from "../Courses/client";
 export default function Kanbas() {
-  const [courses, setCourses] = useState<any[]>(db.courses);
+  const [courses, setCourses] = useState<any[]>([]);
+  const fetchCourses = async () => {
+    const courses = await client.fetchAllCourses();
+    setCourses(courses);
+  };
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
   const [course, setCourse] = useState<any>({
     _id: "1234",
     name: "New Course",
@@ -19,16 +27,16 @@ export default function Kanbas() {
     endDate: "2023-12-15",
     description: "New Description",
   });
-  const addNewCourse = () => {
-    setCourses([
-      ...courses,
-      { ...course, _id: new Date().getTime().toString() },
-    ]);
+  const addNewCourse = async () => {
+    const newCourse = await client.createCourse(course);
+    setCourses([...courses, newCourse]);
   };
-  const deleteCourse = (courseId: any) => {
+  const deleteCourse = async (courseId: any) => {
+    await client.deleteCourse(courseId);
     setCourses(courses.filter((course) => course._id !== courseId));
   };
-  const updateCourse = () => {
+  const updateCourse = async () => {
+    await client.updateCourse(course);
     setCourses(
       courses.map((c) => {
         if (c._id === course._id) {
@@ -42,35 +50,38 @@ export default function Kanbas() {
 
   return (
     <Provider store={store}>
-    <div id="wd-kanbas" className="h-100">
-      <div className="d-flex h-100">
-        <div className="d-none d-md-block bg-black">
-          <KanbasNavigation />
-        </div>
-        <div className="flex-fill p-4">
-          <Routes>
-            <Route path="/" element={<Navigate to="Dashboard" />} />
-            <Route path="Account" element={<Account />} />
-            <Route
-              path="Dashboard"
-              element={
-                <Dashboard
-                  courses={courses}
-                  course={course}
-                  setCourse={setCourse}
-                  addNewCourse={addNewCourse}
-                  deleteCourse={deleteCourse}
-                  updateCourse={updateCourse}
-                />
-              }
-            />
-            <Route path="Courses/:cid/*" element={<Courses courses={courses} />} />
-            <Route path="Calendar" element={<Calender />} />
-            <Route path="Inbox" element={<Inbox />} />
-          </Routes>
+      <div id="wd-kanbas" className="h-100">
+        <div className="d-flex h-100">
+          <div className="d-none d-md-block bg-black">
+            <KanbasNavigation />
+          </div>
+          <div className="flex-fill p-4">
+            <Routes>
+              <Route path="/" element={<Navigate to="Dashboard" />} />
+              <Route path="Account" element={<Account />} />
+              <Route
+                path="Dashboard"
+                element={
+                  <Dashboard
+                    courses={courses}
+                    course={course}
+                    setCourse={setCourse}
+                    addNewCourse={addNewCourse}
+                    deleteCourse={deleteCourse}
+                    updateCourse={updateCourse}
+                  />
+                }
+              />
+              <Route
+                path="Courses/:cid/*"
+                element={<Courses courses={courses} />}
+              />
+              <Route path="Calendar" element={<Calender />} />
+              <Route path="Inbox" element={<Inbox />} />
+            </Routes>
+          </div>
         </div>
       </div>
-    </div>
     </Provider>
   );
 }
