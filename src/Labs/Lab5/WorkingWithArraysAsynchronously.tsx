@@ -91,12 +91,19 @@ export default function WorkingWithArraysAsynchronously() {
               }
             />
             {!todo.editing ? (
-              todo.title
+               <span
+               style={{
+                 textDecoration: todo.completed ? "line-through" : "none",
+               }}
+             >
+               {todo.title}
+             </span>
             ) : (
               <input
                 className="form-control w-50 float-start"
                 defaultValue={todo.title}
                 onKeyDown={(e) => {
+                  console.log(e.key);
                   if (e.key === "Enter") {
                     updateTodo({ ...todo, editing: false });
                   }
@@ -105,13 +112,7 @@ export default function WorkingWithArraysAsynchronously() {
               />
             )}
 
-            <span
-              style={{
-                textDecoration: todo.completed ? "line-through" : "none",
-              }}
-            >
-              {todo.title}
-            </span>
+           
             <FaPencil
               onClick={() => editTodo(todo)}
               className="text-primary float-end me-2 mt-1"
@@ -129,7 +130,7 @@ export default function WorkingWithArraysAsynchronously() {
             />
           </li>
         ))}
-      </ul>{" "}
+      </ul>
       <hr />
     </div>
   );
