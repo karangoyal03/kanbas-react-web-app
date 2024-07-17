@@ -105,6 +105,7 @@ export default function WorkingWithArrays() {
       <br />
       <br />
       <hr />
+      <label className="form-check-label">checked</label>
       <input
         type="checkbox"
         checked={todo.completed}

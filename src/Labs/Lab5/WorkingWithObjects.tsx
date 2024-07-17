@@ -66,6 +66,7 @@ export default function WorkingWithObjects() {
         }
       />
       <hr />
+      <hr />
       <a
         id="wd-update-assignment-completed"
         className="btn btn-primary float-end"
@@ -73,9 +74,9 @@ export default function WorkingWithObjects() {
       >
         Update Completed
       </a>
+      <label className="form-check-label">checked</label>
       <input
         type="checkbox"
-        className="form-control w-75"
         id="wd-assignment-completed"
         checked={assignment.completed}
         onChange={(e) =>
