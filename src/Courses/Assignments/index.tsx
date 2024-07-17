@@ -10,10 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as client from "./client";
 import React, { useState, useEffect } from "react";
 import {
-  addAssignment,
   deleteAssignment,
-  updateAssignment,
-  editAssignment,
 } from "./reducer";
 import { useNavigate } from "react-router-dom";
 export default function Assignments() {
@@ -34,6 +31,13 @@ export default function Assignments() {
     let id = new Date().getTime().toString();
     navigate(`${id}`);
   };
+
+  const deleteAssignments = async (assignmentId: string) => {
+    console.log("meri id",assignmentId);
+    await client.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+    getAssignmentsForCourse(cid as string);
+  }
 
   useEffect(() => {
     getAssignmentsForCourse(cid as string);
@@ -104,9 +108,7 @@ export default function Assignments() {
             </div>
             <ModuleControlChecks
               assignmentId={assignment._id}
-              deleteAssignment={(assignmentId) => {
-                dispatch(deleteAssignment(assignmentId));
-              }}
+              deleteAssignment={deleteAssignments}
             />
           </li>
         ))}

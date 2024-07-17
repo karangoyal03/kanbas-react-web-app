@@ -19,6 +19,7 @@ export default function Modules() {
   const createModule = async (module: any) => {
     const newModule = await client.createModule(cid as string, module);
     dispatch(addModule(newModule));
+    fetchModules()
   };
   const fetchModules = async () => {
     const modules = await client.findModulesForCourse(cid as string);
@@ -30,7 +31,7 @@ export default function Modules() {
   };
   useEffect(() => {
     fetchModules();
-  }, []);
+  }, [cid]);
   const [moduleName, setModuleName] = useState("");
   return (
     <div>
