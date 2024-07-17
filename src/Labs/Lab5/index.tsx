@@ -12,7 +12,9 @@ const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 
 export default function Lab5() {
     return (
-      <div id="wd-lab5">
+      <div className="container" id="wd-lab5">
+        <a id="wd-landing-page" className="list-group-item text-white bg-black text-center border-0" href="/">Back to landing page</a>
+          
         <h2>Lab 5</h2>
         <div className="list-group">
           <a href={`${REMOTE_SERVER}/lab5/welcome`}          
@@ -29,6 +31,7 @@ export default function Lab5() {
         <HttpClient/>
         <WorkingWithObjectsAsynchronously/>
         <WorkingWithArraysAsynchronously/>
+        <hr/>
       </div>
     );
   }

@@ -6,4 +6,4 @@ export default function EnvironmentVariables() {
       <p>Remote Server: {REMOTE_SERVER}</p><hr/>
     </div>
   );
-}
+} 
