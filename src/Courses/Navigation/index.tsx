@@ -10,7 +10,8 @@ export default function CoursesNavigation() {
     { name: "Zoom", path: "Zoom" },
     { name: "Assignments", path: "Assignments" },
     { name: "Quizzes", path: "Quizzes" },
-    { name: "Grades", path: "Grades" }
+    { name: "Grades", path: "Grades" },
+    {name:"People",path:"People"}
   ];
   const { cid } = useParams();
   console.log("inside naviggation page"+cid);
