@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as client from "./client";
+import { Link } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 export default function PeopleTable() {
   const [users, setUsers] = useState<any[]>([]);
 
@@ -64,7 +66,11 @@ export default function PeopleTable() {
           {users.map((user: any) => (
             <tr key={user._id}>
               <td className="wd-full-name text-nowrap">
+                <Link to={`${user.loginId}`}>
+                  <FaUserCircle className="text-secondary me-2 fs-1" />
+                </Link>
                 <span className="wd-first-name">{user.firstName}</span>
+
                 <span className="wd-last-name">{user.lastName}</span>
               </td>
               <td className="wd-login-id">{user.loginId}</td>
