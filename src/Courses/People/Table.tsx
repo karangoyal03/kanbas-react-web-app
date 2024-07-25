@@ -65,11 +65,11 @@ export default function PeopleTable() {
         <tbody>
           {users.map((user: any) => (
             <tr key={user._id}>
-              <td className="wd-full-name text-nowrap">
+              <td style={{color:"red"}} className="wd-full-name text-nowrap">
                 <Link to={`${user.loginId}`}>
                   <FaUserCircle className="text-secondary me-2 fs-1" />
                 </Link>
-                <span className="wd-first-name">{user.firstName}</span>
+                <span className="wd-first-name" >{user.firstName} </span>
 
                 <span className="wd-last-name">{user.lastName}</span>
               </td>
