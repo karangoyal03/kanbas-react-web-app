@@ -2,13 +2,14 @@ import Dashboard from "./Dashboard";
 import KanbasNavigation from "./Navigation";
 import { Routes, Route, Navigate } from "react-router";
 import Courses from "../Courses";
-import Account from "../Account";
+import Account from "../Kanbas/Account/";
 import Calender from "../Calender";
 import Inbox from "../Inbox";
 import { useState, useEffect } from "react";
 import store from "./store";
 import { Provider } from "react-redux";
 import * as client from "../Courses/client";
+import ProtectedRoute from "./ProtectedRoute";
 export default function Kanbas() {
   const [courses, setCourses] = useState<any[]>([]);
   const fetchCourses = async () => {
@@ -62,22 +63,42 @@ export default function Kanbas() {
               <Route
                 path="Dashboard"
                 element={
-                  <Dashboard
-                    courses={courses}
-                    course={course}
-                    setCourse={setCourse}
-                    addNewCourse={addNewCourse}
-                    deleteCourse={deleteCourse}
-                    updateCourse={updateCourse}
-                  />
+                  <ProtectedRoute>
+                    <Dashboard
+                      courses={courses}
+                      course={course}
+                      setCourse={setCourse}
+                      addNewCourse={addNewCourse}
+                      deleteCourse={deleteCourse}
+                      updateCourse={updateCourse}
+                    />
+                  </ProtectedRoute>
                 }
               />
               <Route
                 path="Courses/:cid/*"
-                element={<Courses courses={courses} />}
+                element={
+                  <ProtectedRoute>
+                    <Courses courses={courses} />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="Calendar" element={<Calender />} />
-              <Route path="Inbox" element={<Inbox />} />
+              <Route
+                path="Calendar"
+                element={
+                  <ProtectedRoute>
+                    <Calender />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="Inbox"
+                element={
+                  <ProtectedRoute>
+                    <Inbox />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </div>
         </div>
