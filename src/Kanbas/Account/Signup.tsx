@@ -18,6 +18,7 @@ export default function Signup() {
       setError(err.response.data.message);
     }
   };
+
   return (
     <div className="wd-signup-screen">
       <h1>Sign up</h1>

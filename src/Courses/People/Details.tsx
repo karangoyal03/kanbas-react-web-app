@@ -15,6 +15,8 @@ export default function PeopleDetails({
   const navigate = useNavigate();
   const [user, setUser] = useState<any>({});
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [role, setRole] = useState("");
   const [editing, setEditing] = useState(false);
   const deleteUser = async (uid: string) => {
     await client.deleteUser(uid);
@@ -31,18 +33,31 @@ export default function PeopleDetails({
 
   const saveUser = async () => {
     const [firstName, lastName] = name.split(" ");
-    const updatedUser = { ...user, firstName, lastName };
+    let updatedUser: any;
+    if (email.length !== 0) {
+      updatedUser = { ...user, firstName, lastName, email };
+    } else {
+      updatedUser = { ...user, firstName, lastName };
+    }
+
+    if (email.length !== 0 && role.length !== 0) {
+      updatedUser = { ...user, firstName, lastName, email, role };
+    } else if (email.length === 0 && role.length !== 0) {
+      updatedUser = { ...user, firstName, lastName, role };
+    } else {
+      updatedUser = { ...user, firstName, lastName };
+    }
     await client.updateUser(updatedUser);
-    setUser((prev:any) => prev = updatedUser);
+    setUser((prev: any) => (prev = updatedUser));
     fetchUsers();
     setEditing(false);
     navigate(`/Kanbas/Courses/${cid}/People`);
   };
 
-  const cancelEdit = ()=>{
-    navigate(`/Kanbas/Courses/${cid}/People`)
+  const cancelEdit = () => {
+    navigate(`/Kanbas/Courses/${cid}/People`);
     setEditing(false);
-  }
+  };
 
   useEffect(() => {
     if (uid) fetchUser();
@@ -61,40 +76,66 @@ export default function PeopleDetails({
         {" "}
         <FaUserCircle className="text-secondary me-2 fs-1" />{" "}
       </div>
-      <hr />
-      {/* <div className="text-danger fs-4 wd-name">
-        {" "}
-        {user.firstName} {user.lastName}{" "}
-      </div> */}
-      <div className="text-danger fs-4 wd-name">
+      <br />
+      <div className="d-flex flex-column align-items-start text-danger fs-4 wd-name">
+        <div className="w-100 d-flex justify-content-end">
+          {!editing && (
+            <FaPencil
+              onClick={() => setEditing(true)}
+              className="fs-5 mt-2 wd-edit"
+            />
+          )}
+          {editing && (
+            <FaCheck
+              onClick={() => saveUser()}
+              className="fs-5 mt-2 me-2 wd-save"
+            />
+          )}
+        </div>
         {!editing && (
-          <FaPencil
-            onClick={() => setEditing(true)}
-            className="float-end fs-5 mt-2 wd-edit"
-          />
-        )}
-        {editing && (
-          <FaCheck
-            onClick={() => saveUser()}
-            className="float-end fs-5 mt-2 me-2 wd-save"
-          />
-        )}
-        {!editing && (
-          <div className="wd-name" onClick={() => setEditing(true)}>
+          <div className="wd-name mt-2" onClick={() => setEditing(true)}>
             {user.firstName} {user.lastName}
           </div>
         )}
         {user && editing && (
-          <input
-            className="form-control w-50 wd-edit-name"
-            defaultValue={`${user.firstName} ${user.lastName}`}
-            onChange={(e) => setName(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                saveUser();
-              }
-            }}
-          />
+          <div className="w-100 mt-2">
+            <input
+              className="form-control w-75 wd-edit-name my-2"
+              defaultValue={`${user.firstName} ${user.lastName}`}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  saveUser();
+                }
+              }}
+            />
+            <input
+              type="email"
+              className="form-control w-75 wd-edit-email my-2"
+              defaultValue={`${user.email}`}
+              onChange={(e) => setEmail(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  saveUser();
+                }
+              }}
+            />
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="form-select w-50 wd-select-role my-2"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  saveUser();
+                }
+              }}
+            >
+              <option value="">All Roles</option>
+              <option value="STUDENT">Students</option>
+              <option value="TA">Assistants</option>
+              <option value="FACULTY">Faculty</option>
+            </select>
+          </div>
         )}
       </div>
       <b>Roles:</b> <span className="wd-roles"> {user.role} </span> <br />
@@ -102,6 +143,7 @@ export default function PeopleDetails({
       <br />
       <b>Section:</b> <span className="wd-section"> {user.section} </span>{" "}
       <br />
+      <b>Email:</b> <span className="wd-email"> {user.email} </span> <br />
       <b>Total Activity:</b>{" "}
       <span className="wd-total-activity">{user.totalActivity}</span> <hr />
       <button
