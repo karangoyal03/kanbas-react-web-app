@@ -10,6 +10,7 @@ export default function Profile() {
   const fetchProfile = async () => {
     try {
       const account = await client.profile();
+      console.log(account);
       setProfile(account);
     } catch (err: any) {
       navigate("/Kanbas/Account/Signin");
