@@ -10,7 +10,6 @@ import PeopleTable from "./People/Table";
 import PeopleDetails from "./People/Details";
 export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
-  console.log("inside course page"+cid);
   const course = courses.find((course) => course._id === cid);
   const { pathname } = useLocation();
   return (
