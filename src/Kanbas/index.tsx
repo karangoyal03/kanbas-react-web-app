@@ -14,6 +14,7 @@ export default function Kanbas() {
   const [courses, setCourses] = useState<any[]>([]);
   const fetchCourses = async () => {
     const courses = await client.fetchAllCourses();
+    console.log("courses ",courses)
     setCourses(courses);
   };
   useEffect(() => {
