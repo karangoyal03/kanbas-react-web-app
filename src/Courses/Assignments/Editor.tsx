@@ -22,15 +22,17 @@ export default function AssignmentEditor() {
   };
 
   async function getAssignmentsForCourse(cid: String) {
+    console.log("cid ki value",cid)
     const assignments = await client.findAssignmentById(cid as string);
     console.log(assignments);
-    setResults(assignments.filter((assignment: any) => assignment._id === aid));
-    if (assignments && assignments[0]) {
-      setTitle(assignments[0].title);
-      setPoints(assignments[0].points);
-      setDescription(assignments[0].description);
-      setDueDate(assignments[0].dueDate);
-      setAvailableFrom(assignments[0].availableFrom);
+    setResults([...results , assignments]);
+    // /setResults(assignments.filter((assignment: any) => assignment._id === aid));
+    if (assignments) {
+      setTitle(assignments.title);
+      setPoints(assignments.points);
+      setDescription(assignments.description);
+      setDueDate(assignments.dueDate);
+      setAvailableFrom(assignments.availableFrom);
     }
   }
 
@@ -56,10 +58,12 @@ export default function AssignmentEditor() {
 
     if (results[0] && results[0]._id === aid) {
       await client.updateAssignment(assignmentData);
-      dispatch(updateAssignment(assignmentData));
+      // dispatch(updateAssignment(assignmentData));
     } else {
+      console.log(assignmentData);
+
       await client.createAssignment(assignmentData);
-      dispatch(addAssignment(assignmentData));
+      // dispatch(addAssignment(assignmentData));
     }
 
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
